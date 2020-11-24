@@ -1,0 +1,36 @@
+Критерии валидности:
+1) если номер начинается с '+', то он содержит 12 цифр
+2) если номер начинается с цифры или открывающей скобки, то он содержит 10 цифр
+3) может содержать 0-2 знаков '-', которые не могут идти подряд
+4) может содержать 1 пару скобок '(' и ')' , причем если она есть, то она расположена левее знаков '-'
+5) скобки внутри содержат четко 3 цифры
+6) номер не содержит букв
+7) номер заканчивается на цифру
+
+public class Solution {
+    public static boolean checkTelNumber(String telNumber) {
+        if (telNumber != null && telNumber.length() != 0) {
+            Pattern p = Pattern.compile("\\d");
+            Matcher m = p.matcher(telNumber);
+            String firstLiteral = telNumber.substring(0,1);
+            if (firstLiteral.equals("+")) {
+                int count = 0;
+                while (m.find()) {
+                    count++;
+                }
+                if (count == 12) return telNumber.matches("^\\+\\d+(\\(\\d{3}\\))?\\d+-?\\d+-?\\d+$");
+            }
+            else if (firstLiteral.matches("(\\d)|(\\()")) {
+                int count = 0;
+                while (m.find()) {
+                    count++;
+                }
+                if (count == 10) return telNumber.matches("^\\d*(\\(\\d{3}\\))?\\d+-?\\d+-?\\d+$");
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+    }
+}
